@@ -9,6 +9,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
     {
         protected $gtm_code;
         protected $init_global;
+        protected $init_gtm_service;
         protected $init_services;
         protected $color_primary;
         protected $color_secondary;
@@ -28,6 +29,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             $this->init_global = $this->getInitGlobal();
             $this->gtm_code = $this->getGtmCode();
+            $this->init_gtm_service = $this->getInitGtmService();
             $this->init_services = $this->getInitServices();
             $this->color_primary = $this->getColorPrimary();
             $this->color_secondary = $this->getColorSecondary();
@@ -57,6 +59,11 @@ if (!class_exists('GpTarteaucitronAdmin')) {
         static function getInitGlobal()
         {
             return self::getSettings('gp_tarteaucitron_init_global', self::init_global_default());
+        }
+
+        static function getInitGtmService()
+        {
+            return self::getSettings('gp_tarteaucitron_init_gtm_service', self::init_gtm_service_default());
         }
 
         static function getInitServices()
@@ -165,8 +172,17 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Add Slug Field
             add_settings_field(
+                'gp_tarteaucitron_init_gtm_service', // id
+                __('Init GTM services'), // title
+                [$this, 'init_gtm_service_render'], // callback
+                'gp-tarteaucitron-admin-sections', // page
+                'section_tarteaucitron_services' // section
+            );
+
+            // Add Slug Field
+            add_settings_field(
                 'gp_tarteaucitron_init_services', // id
-                __('Init services'), // title
+                __('Init Services'), // title
                 [$this, 'init_services_render'], // callback
                 'gp-tarteaucitron-admin-sections', // page
                 'section_tarteaucitron_services' // section
@@ -206,6 +222,9 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 $sanitary_values['gp_tarteaucitron_init_global'] = $input['gp_tarteaucitron_init_global'];
             }
 
+            if (isset($input['gp_tarteaucitron_init_gtm_service'])) {
+                $sanitary_values['gp_tarteaucitron_init_gtm_service'] = sanitize_textarea_field($input['gp_tarteaucitron_init_gtm_service']);
+            }
             if (isset($input['gp_tarteaucitron_init_services'])) {
                 $sanitary_values['gp_tarteaucitron_init_services'] = sanitize_textarea_field($input['gp_tarteaucitron_init_services']);
             }
@@ -249,7 +268,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
         }
 
-        public function init_services_render()
+        public function init_gtm_service_render()
         {
             if ($this->gtm_code) { ?>
                 <textarea rows="4" style="background: #F2F2F2;
@@ -259,10 +278,25 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                         padding: 11px;
                         line-height: 1.3em;
                         margin-bottom: 22px;"
-                          name='gp_tarteaucitron_settings[gp_tarteaucitron_init_services]'><?php echo htmlspecialchars($this->init_services); ?></textarea>
+                          name='gp_tarteaucitron_settings[gp_tarteaucitron_init_gtm_service]'><?php echo htmlspecialchars($this->init_gtm_service); ?></textarea>
             <?php }
 
         }
+
+        public function init_services_render()
+        { ?>
+            <textarea rows="4" style="background: #F2F2F2;
+                    outline: none;
+                    width: 100%;
+                    border: 1px solid #ccc;
+                    padding: 11px;
+                    line-height: 1.3em;"
+                      name='gp_tarteaucitron_settings[gp_tarteaucitron_init_services]'><?php echo htmlspecialchars($this->init_services); ?></textarea>
+            <p class="description">
+                <small><?php echo __('Remove the html comments'); ?></small>
+            </p>
+        <?php }
+
 
         public function color_primary_render()
         {
@@ -305,12 +339,18 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
         }
 
-        static function init_services_default()
+        static function init_gtm_service_default()
         {
             return 'tarteaucitron.user.googletagmanagerId = \'' . self::getGtmCode() . '\';
             (tarteaucitron.job = tarteaucitron.job || []).push(\'googletagmanager\');
             /*You can add here other services*/';
 
+        }
+
+        static function init_services_default()
+        {
+            return '/*(tarteaucitron.job = tarteaucitron.job || []).push(\'facebook\');*/
+                    /*Add your services here*/';
         }
 
         /**
