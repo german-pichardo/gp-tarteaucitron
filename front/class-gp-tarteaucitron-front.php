@@ -13,6 +13,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         protected $init_services;
         protected $color_primary;
         protected $color_secondary;
+        protected $color_text_primary;
         protected $css_custom;
 
         /**
@@ -29,6 +30,7 @@ if (!class_exists('GpTarteaucitronFront')) {
             $this->init_services = GpTarteaucitronAdmin::getInitServices();
             $this->color_primary = GpTarteaucitronAdmin::getColorPrimary();
             $this->color_secondary = GpTarteaucitronAdmin::getColorSecondary();
+            $this->color_text_primary = GpTarteaucitronAdmin::getColorTextPrimary();
             $this->css_custom = GpTarteaucitronAdmin::getCssCustom();
         }
 
@@ -101,10 +103,9 @@ if (!class_exists('GpTarteaucitronFront')) {
                 body #tarteaucitronRoot #tarteaucitronAlertBig,
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronDisclaimerAlert,
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronDisclaimerAlert b,
-                body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronCloseAlert,
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronPersonalize,
                 body #tarteaucitronAlertBig #tarteaucitronPrivacyUrl {
-                    color: #ffffff;
+                    color: <?php echo $this->color_text_primary;?>;;
                 }
 
                 body #tarteaucitron b,
@@ -182,6 +183,7 @@ if (!class_exists('GpTarteaucitronFront')) {
                 body #tarteaucitron #tarteaucitronClosePanel,
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronCloseAlert {
                     background-color: <?php echo self::getColorDarken($this->color_primary, 10);?>;
+                    color: <?php echo $this->color_text_primary;?>;
                 }
 
                 <?php endif;?>
@@ -192,7 +194,7 @@ if (!class_exists('GpTarteaucitronFront')) {
                 body #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronDeny,
                 body #tarteaucitron #tarteaucitronPrivacyUrl {
                     background-color: <?php echo self::getColorDarken($this->color_secondary, 10);?>;
-                    color: #ffffff;
+                    color: <?php echo $this->color_text_primary;?>;
                 }
 
                 <?php endif;?>
