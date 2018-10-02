@@ -137,7 +137,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
             // Add Section for option init js
             add_settings_section(
                 'section_tarteaucitron_global', // id
-                __('Tarteaucitron global JS config'), // title
+                __('Tarteaucitron global JS options'), // title
                 '', // callback
                 'gp-tarteaucitron-admin-sections' // page
             );
