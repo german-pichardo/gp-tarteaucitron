@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Gp: tarteaucitron
- * Description: Simple way to configure tarteaucitron.js (Menu->Settings->Gp Tarteaucitron.
+ * Description: Simple way to configure tarteaucitron.js, includes general options,GTM service, services API,customize css colors and custom css field (Menu->Settings->Gp Tarteaucitron.
  * Version: 1.1.0
  * Author: German Pichardo
  * Author URI: http://www.german-pichardo.com
