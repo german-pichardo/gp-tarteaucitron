@@ -102,7 +102,8 @@ if (!class_exists('GpTarteaucitronFront')) {
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronDisclaimerAlert,
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronDisclaimerAlert b,
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronCloseAlert,
-                body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronPersonalize {
+                body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronPersonalize,
+                body #tarteaucitronAlertBig #tarteaucitronPrivacyUrl {
                     color: #ffffff;
                 }
 
@@ -188,8 +189,10 @@ if (!class_exists('GpTarteaucitronFront')) {
                 <?php if (!empty($this->color_secondary)) :?>
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronPersonalize,
                 body #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronAllow,
-                body #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronDeny {
+                body #tarteaucitron #tarteaucitronServices .tarteaucitronLine .tarteaucitronAsk .tarteaucitronDeny,
+                body #tarteaucitron #tarteaucitronPrivacyUrl {
                     background-color: <?php echo self::getColorDarken($this->color_secondary, 10);?>;
+                    color: #ffffff;
                 }
 
                 <?php endif;?>
