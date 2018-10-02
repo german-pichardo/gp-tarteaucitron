@@ -1,7 +1,7 @@
 # gp-tarteaucitron
 Simple way to configure tarteaucitron.js, includes general js options,GTM service, services API, customize colors and custom css field (Menu->Settings->Gp Tarteaucitron).
 
-![Alt Text](https://raw.githubusercontent.com/german-pichardo/gp-tarteaucitron/master/screenshot.gif)
+![Alt Text](https://raw.githubusercontent.com/german-pichardo/gp-tarteaucitron/master/screenshot-1.gif)
 
 **German Pichardo**
 
