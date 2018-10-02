@@ -21,12 +21,12 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function __construct()
         {
             add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
-            add_action('wp_footer', [$this, 'footer_scripts'], 1);
             add_action('wp_head', [$this, 'head_scripts']);
+            add_action('wp_footer', [$this, 'footer_scripts'], 1);
+            $this->init_global = GpTarteaucitronAdmin::getInitGlobal();
             $this->gtm_code = GpTarteaucitronAdmin::getGtmCode();
             $this->init_gtm_service = GpTarteaucitronAdmin::getInitGtmService();
             $this->init_services = GpTarteaucitronAdmin::getInitServices();
-            $this->init_global = GpTarteaucitronAdmin::getInitGlobal();
             $this->color_primary = GpTarteaucitronAdmin::getColorPrimary();
             $this->color_secondary = GpTarteaucitronAdmin::getColorSecondary();
             $this->css_custom = GpTarteaucitronAdmin::getCssCustom();
@@ -37,6 +37,12 @@ if (!class_exists('GpTarteaucitronFront')) {
             wp_enqueue_script('tarteaucitron', plugins_url('tarteaucitron/tarteaucitron.js', dirname(__FILE__)), [], NULL, false);
         }
 
+        public function head_scripts()
+        {
+            $this->css_colors();
+            $this->css_custom();
+        }
+
         public function footer_scripts()
         {
             $this->script_init_global();
@@ -44,16 +50,10 @@ if (!class_exists('GpTarteaucitronFront')) {
             $this->script_init_services();
         }
 
-        public function head_scripts()
-        {
-            $this->css_colors();
-            $this->css_custom();
-        }
-
         public function script_init_global()
         {
             if ($this->init_global) { ?>
-                <script type="text/javascript">
+                <script id="gp_tarteaucitron_init_global" type="text/javascript">
                     <?php echo $this->init_global;?>
                 </script>
             <?php }
@@ -62,7 +62,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function script_init_gtm_service()
         {
             if ($this->init_gtm_service && $this->gtm_code) { ?>
-                <script type="text/javascript">
+                <script id="gp_tarteaucitron_init_gtm_service" type="text/javascript">
                     <?php echo $this->init_gtm_service;?>
                 </script>
             <?php }
@@ -80,7 +80,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function css_colors()
         { ?>
             <?php if ($this->init_global && (!empty($this->color_primary) || !empty($this->color_secondary))) : ?>
-            <style id="tarteaucitron_css_colors" type="text/css">
+            <style id="gp_tarteaucitron_css_colors" type="text/css">
                 @media screen and (max-width: 767px) {
                     body #tarteaucitronAlertBig #tarteaucitronCloseAlert,
                     body #tarteaucitronAlertBig #tarteaucitronPersonalize {
@@ -202,7 +202,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function css_custom()
         { ?>
             <?php if (!empty($this->css_custom)) : ?>
-            <style id="tarteaucitron_css_custom" type="text/css">
+            <style id="gp_tarteaucitron_css_custom" type="text/css">
                 <?php echo $this->css_custom;?>
             </style>
         <?php endif; ?>
