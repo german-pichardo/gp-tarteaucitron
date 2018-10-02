@@ -28,19 +28,24 @@ if (!class_exists('GpTarteaucitronAdmin')) {
             add_filter('plugin_action_links', [$this, 'add_settings_link'], 10, 2);
             add_filter('admin_enqueue_scripts', [$this, 'enqueue_color_picker']);
 
-            $this->init_global = $this->getInitGlobal();
-            $this->gtm_code = $this->getGtmCode();
-            $this->init_gtm_service = $this->getInitGtmService();
-            $this->init_services = $this->getInitServices();
-            $this->color_primary = $this->getColorPrimary();
-            $this->color_secondary = $this->getColorSecondary();
-            $this->css_custom = $this->getCssCustom();
+            $this->init_global = self::getInitGlobal();
+            $this->gtm_code = self::getGtmCode();
+            $this->init_gtm_service = self::getInitGtmService();
+            $this->init_services = self::getInitServices();
+            $this->color_primary = self::getColorPrimary();
+            $this->color_secondary = self::getColorSecondary();
+            $this->css_custom = self::getCssCustom();
         }
 
         public function enqueue_color_picker($hook)
         {
             wp_enqueue_style('wp-color-picker');
             wp_enqueue_script('gp-tarteaucitron-color-picker', plugins_url('js/color-picker-init.js', __FILE__), ['wp-color-picker'], false, true);
+        }
+
+        public static function getPrivacyUrl()
+        {
+            return get_option('wp_page_for_privacy_policy') ? get_the_guid(get_option('wp_page_for_privacy_policy')) : '';
         }
 
         static function getSettings($key, $else = false)
@@ -353,7 +358,6 @@ if (!class_exists('GpTarteaucitronAdmin')) {
          */
         static function init_global_default()
         {
-
             return 'tarteaucitron.init({
 	    "hashtag": "#tarteaucitron",
 	    "cookieName": "tartaucitron",
@@ -366,9 +370,9 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 	    "AcceptAllCta" : true,
 	    "highPrivacy": true,
 	    "handleBrowserDNTRequest": false,
-    
 	    "removeCredit": false,
 	    "moreInfoLink": true,
+	    "privacyUrl": "' . self::getPrivacyUrl() . '"
 });';
 
         }
