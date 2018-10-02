@@ -13,6 +13,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         protected $init_services;
         protected $color_primary;
         protected $color_secondary;
+        protected $css_custom;
 
         /**
          * Plugin initialization
@@ -28,6 +29,7 @@ if (!class_exists('GpTarteaucitronFront')) {
             $this->init_global = GpTarteaucitronAdmin::getInitGlobal();
             $this->color_primary = GpTarteaucitronAdmin::getColorPrimary();
             $this->color_secondary = GpTarteaucitronAdmin::getColorSecondary();
+            $this->css_custom = GpTarteaucitronAdmin::getCssCustom();
         }
 
         public function enqueue_scripts()
@@ -45,6 +47,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function head_scripts()
         {
             $this->css_colors();
+            $this->css_custom();
         }
 
         public function script_init_global()
@@ -77,7 +80,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function css_colors()
         { ?>
             <?php if ($this->init_global && (!empty($this->color_primary) || !empty($this->color_secondary))) : ?>
-            <style id="tarteaucitron_custom_css" type="text/css">
+            <style id="tarteaucitron_css_colors" type="text/css">
                 @media screen and (max-width: 767px) {
                     body #tarteaucitronAlertBig #tarteaucitronCloseAlert,
                     body #tarteaucitronAlertBig #tarteaucitronPersonalize {
@@ -191,6 +194,16 @@ if (!class_exists('GpTarteaucitronFront')) {
 
                 <?php endif;?>
 
+            </style>
+        <?php endif; ?>
+
+        <?php }
+
+        public function css_custom()
+        { ?>
+            <?php if (!empty($this->css_custom)) : ?>
+            <style id="tarteaucitron_css_custom" type="text/css">
+                <?php echo $this->css_custom;?>
             </style>
         <?php endif; ?>
 
