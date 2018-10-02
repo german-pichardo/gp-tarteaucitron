@@ -227,11 +227,12 @@ if (!class_exists('GpTarteaucitronAdmin')) {
             // Field Color text primary
             add_settings_field(
                 'gp_tarteaucitron_color_text_primary', // id
-                __('Color Primary'), // title
+                __('Color text primary'), // title
                 [$this, 'color_text_primary_render'], // callback
                 'gp-tarteaucitron-admin-sections', // page
                 'section_tarteaucitron_colors' // section
             );
+
             // Field css custom
             add_settings_field(
                 'gp_tarteaucitron_css_custom', // id
@@ -363,7 +364,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
         public function color_text_primary_render()
         {
             printf(
-                '<input class="tarteaucitron-color-picker" type="text"  name="gp_tarteaucitron_settings[gp_tarteaucitron_color_text_primary]" value="%s" id="gp_tarteaucitron_color_text_primary" >',
+                '<input class="tarteaucitron-color-picker" type="text"  name="gp_tarteaucitron_settings[gp_tarteaucitron_color_text_primary]" value="%s" id="gp_tarteaucitron_color_text_primary" data-default-color="#ffffff" >',
                 $this->color_text_primary ? esc_attr($this->color_text_primary) : ''
             );
         }
