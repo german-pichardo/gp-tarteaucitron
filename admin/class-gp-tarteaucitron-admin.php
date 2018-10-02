@@ -110,7 +110,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
         { ?>
             <div class="wrap">
                 <h2><?php _e('Tarteaucitron settings'); ?></h2>
-                <p><?php _e('For instructions visit: '); ?><a target="_blank" rel="noopener nofollow" href="https://opt-out.ferank.eu/fr/install/">https://opt-out.ferank.eu/fr/install/</a></p>
+                <p><?php _e('For instructions visit: '); ?><a target="_blank" rel="noopener nofollow" href="https://opt-out.ferank.eu/en/install/">https://opt-out.ferank.eu/en/install/</a></p>
                 <hr>
                 <?php //settings_errors();
                 ?>
