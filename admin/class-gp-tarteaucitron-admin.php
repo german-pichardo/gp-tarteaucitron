@@ -405,8 +405,7 @@ body #tarteaucitronAlertSmall { }';
          */
         public function add_settings_link($links, $file)
         {
-            $this_plugin = plugin_basename(__FILE__);
-
+            $this_plugin = plugin_basename('gp-tarteaucitron/gp-tarteaucitron.php');
             if (is_plugin_active($this_plugin) && $file == $this_plugin) {
                 $links[] = '<a href="' . admin_url('options-general.php?page=gp-tarteaucitron-options') . '">' . __('Settings', 'gp-tarteaucitron') . '</a>';
             }
