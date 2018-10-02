@@ -10,3 +10,4 @@ Simple way to configure tarteaucitron.js, includes general js options,GTM servic
 
 ## Source
 * [Tarteaucitron.js github](https://github.com/AmauriC/tarteaucitron.js)
+* [https://opt-out.ferank.eu/en/](https://opt-out.ferank.eu/en/)
