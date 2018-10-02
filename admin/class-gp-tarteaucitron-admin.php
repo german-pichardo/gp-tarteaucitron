@@ -120,7 +120,6 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
         public function admin_page_init()
         {
-
             // Register Settings
             register_setting(
                 'gp_tarteaucitron_option_group', // option_group
@@ -182,7 +181,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
             // Add Slug Field
             add_settings_field(
                 'gp_tarteaucitron_init_services', // id
-                __('Init Services'), // title
+                __('Init Services/options'), // title
                 [$this, 'init_services_render'], // callback
                 'gp-tarteaucitron-admin-sections', // page
                 'section_tarteaucitron_services' // section
@@ -276,9 +275,8 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                         width: 100%;
                         border: 1px solid #ccc;
                         padding: 11px;
-                        line-height: 1.3em;
-                        margin-bottom: 22px;"
-                          name='gp_tarteaucitron_settings[gp_tarteaucitron_init_gtm_service]'><?php echo htmlspecialchars($this->init_gtm_service); ?></textarea>
+                        line-height: 1.3em;"
+                          name='gp_tarteaucitron_settings[gp_tarteaucitron_init_gtm_service]'><?php echo trim(htmlspecialchars($this->init_gtm_service)); ?></textarea>
             <?php }
 
         }
@@ -291,9 +289,9 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                     border: 1px solid #ccc;
                     padding: 11px;
                     line-height: 1.3em;"
-                      name='gp_tarteaucitron_settings[gp_tarteaucitron_init_services]'><?php echo htmlspecialchars($this->init_services); ?></textarea>
+                      name='gp_tarteaucitron_settings[gp_tarteaucitron_init_services]'><?php echo trim(htmlspecialchars($this->init_services)); ?></textarea>
             <p class="description">
-                <small><?php echo __('Remove the html comments'); ?></small>
+                <small><?php echo __('Follow the instructions to install services: '); ?> <a href="https://opt-out.ferank.eu/en/install/" rel="noopener nofollow">https://opt-out.ferank.eu/en/install/</a></small>
             </p>
         <?php }
 
@@ -342,15 +340,17 @@ if (!class_exists('GpTarteaucitronAdmin')) {
         static function init_gtm_service_default()
         {
             return 'tarteaucitron.user.googletagmanagerId = \'' . self::getGtmCode() . '\';
-            (tarteaucitron.job = tarteaucitron.job || []).push(\'googletagmanager\');
-            /*You can add here other services*/';
+(tarteaucitron.job = tarteaucitron.job || []).push(\'googletagmanager\');
+/*You can change this field if necessary*/';
 
         }
 
         static function init_services_default()
         {
-            return '/*(tarteaucitron.job = tarteaucitron.job || []).push(\'facebook\');*/
-                    /*Add your services here*/';
+            return '
+            var tarteaucitronForceLanguage = \'fr\'; /* supported: fr, en, de, es, it, pt, pl, ru */
+var tarteaucitronForceExpire = \'90\'; /* 3 months */
+/*Add your options or services here*/';
         }
 
         /**
