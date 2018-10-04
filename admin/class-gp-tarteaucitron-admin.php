@@ -386,22 +386,25 @@ if (!class_exists('GpTarteaucitronAdmin')) {
          */
         static function init_global_default()
         {
-            return 'tarteaucitron.init({
-	    "hashtag": "#tarteaucitron",
-	    "cookieName": "tartaucitron",
 
-	    "orientation": "bottom",
-	    "showAlertSmall": false,
-	    "cookieslist": true,
+            $global_config = [
+                "hashtag"    => "#tarteaucitron",
+                "cookieName" => "tartaucitron",
 
-	    "adblocker": false,
-	    "AcceptAllCta" : true,
-	    "highPrivacy": true,
-	    "handleBrowserDNTRequest": false,
-	    "removeCredit": false,
-	    "moreInfoLink": true,
-	    "privacyUrl": "' . self::getPrivacyUrl() . '"
-});';
+                "orientation"    => "bottom",
+                "showAlertSmall" => false,
+                "cookieslist"    => true,
+
+                "adblocker"               => false,
+                "AcceptAllCta"            => true,
+                "highPrivacy"             => true,
+                "handleBrowserDNTRequest" => false,
+                "removeCredit"            => false,
+                "moreInfoLink"            => true,
+                "privacyUrl"              => self::getPrivacyUrl(),
+            ];
+
+            return 'tarteaucitron.init(' . json_encode($global_config, JSON_PRETTY_PRINT) . ');';
 
         }
 
