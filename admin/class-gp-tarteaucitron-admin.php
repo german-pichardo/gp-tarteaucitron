@@ -294,7 +294,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
         {
             printf(
                 '<input type="text" placeholder="' . __('GTM-XXXXXXX') . '" class="regular-text" name="gp_tarteaucitron_settings[gp_tarteaucitron_gtm_code]" value="%s" id="gp_tarteaucitron_gtm_code" >',
-                $this->gtm_code ? esc_attr($this->gtm_code) : ''
+                esc_attr($this->gtm_code)
             );
         }
 
@@ -303,53 +303,64 @@ if (!class_exists('GpTarteaucitronAdmin')) {
          */
         public function init_global_render()
         {
-            ?>
-            <textarea rows="18" style="background: #F2F2F2;
-                        outline: none;
-                        width: 100%;
-                        border: 1px solid #ccc;
-                        padding: 11px;
-                        line-height: 1.3em;
-                        margin-bottom: 22px;"
-                      name='gp_tarteaucitron_settings[gp_tarteaucitron_init_global]'><?php echo htmlspecialchars($this->init_global); ?></textarea>
-            <?php
-
+            printf(
+                '<textarea 
+                        name="gp_tarteaucitron_settings[gp_tarteaucitron_init_global]" 
+                        rows="16" 
+                        style="background: #F2F2F2;
+                            outline: none;
+                            width: 100%%;
+                            border: 1px solid #ccc;
+                            padding: 11px;
+                            line-height: 1.3em;
+                            margin-bottom: 22px;" 
+                        >%s</textarea>',
+                htmlspecialchars($this->init_global)
+            );
         }
 
         public function init_gtm_service_render()
         {
-            if ($this->gtm_code) { ?>
-                <textarea rows="4" style="background: #F2F2F2;
-                        outline: none;
-                        width: 100%;
-                        border: 1px solid #ccc;
-                        padding: 11px;
-                        line-height: 1.3em;"
-                          name='gp_tarteaucitron_settings[gp_tarteaucitron_init_gtm_service]'><?php echo trim(htmlspecialchars($this->init_gtm_service)); ?></textarea>
-            <?php }
-
+            if (!$this->gtm_code) return;
+            printf(
+                '<textarea 
+                        name="gp_tarteaucitron_settings[gp_tarteaucitron_init_gtm_service]"
+                        rows="4" 
+                        style="background: #F2F2F2;
+                            outline: none;
+                            width: 100%%;
+                            border: 1px solid #ccc;
+                            padding: 11px;
+                            line-height: 1.3em;" 
+                        >%s</textarea>',
+                trim(htmlspecialchars($this->init_gtm_service))
+            );
         }
 
         public function init_services_render()
-        { ?>
-            <textarea rows="4" style="background: #F2F2F2;
-                    outline: none;
-                    width: 100%;
-                    border: 1px solid #ccc;
-                    padding: 11px;
-                    line-height: 1.3em;"
-                      name='gp_tarteaucitron_settings[gp_tarteaucitron_init_services]'><?php echo trim(htmlspecialchars($this->init_services)); ?></textarea>
-            <p class="description">
-                <small><?php echo __('Follow the instructions to install services: '); ?> <a href="https://opt-out.ferank.eu/en/install/" rel="noopener nofollow">https://opt-out.ferank.eu/en/install/</a></small>
-            </p>
-        <?php }
+        {
+            printf(
+                '<textarea 
+                        name="gp_tarteaucitron_settings[gp_tarteaucitron_init_services]" 
+                        rows="6" 
+                        style="background: #F2F2F2;
+                            outline: none;
+                            width: 100%%;
+                            border: 1px solid #ccc;
+                            padding: 11px;
+                            line-height: 1.3em;" 
+                        >%1$s</textarea>
+                        <p class="description"><small>%2$s <a href="%3$s" rel="noopener nofollow" target="_blank">%3$s</a></small></p>',
+                trim(htmlspecialchars($this->init_services)), __('Follow the instructions to install services: '), 'https://opt-out.ferank.eu/en/install/'
+            );
+        }
 
 
         public function color_primary_render()
         {
             printf(
                 '<input class="tarteaucitron-color-picker" type="text"  name="gp_tarteaucitron_settings[gp_tarteaucitron_color_primary]" value="%s" id="gp_tarteaucitron_color_primary" >',
-                $this->color_primary ? esc_attr($this->color_primary) : ''
+                esc_attr($this->color_primary)
             );
         }
 
@@ -357,7 +368,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
         {
             printf(
                 '<input class="tarteaucitron-color-picker" type="text"  name="gp_tarteaucitron_settings[gp_tarteaucitron_color_secondary]" value="%s" id="gp_tarteaucitron_color_secondary" > <p class="description"><small>(color for buttons)</small></p>',
-                $this->color_secondary ? esc_attr($this->color_secondary) : ''
+                esc_attr($this->color_secondary)
             );
         }
 
@@ -365,20 +376,26 @@ if (!class_exists('GpTarteaucitronAdmin')) {
         {
             printf(
                 '<input class="tarteaucitron-color-picker" type="text"  name="gp_tarteaucitron_settings[gp_tarteaucitron_color_text_primary]" value="%s" id="gp_tarteaucitron_color_text_primary" data-default-color="#ffffff" >',
-                $this->color_text_primary ? esc_attr($this->color_text_primary) : ''
+                esc_attr($this->color_text_primary)
             );
         }
 
         public function css_custom_render()
-        { ?>
-            <textarea rows="8" style="background: #F2F2F2;
-                    outline: none;
-                    width: 100%;
-                    border: 1px solid #ccc;
-                    padding: 11px;
-                    line-height: 1.3em;"
-                      name='gp_tarteaucitron_settings[gp_tarteaucitron_css_custom]'><?php echo trim(htmlspecialchars($this->css_custom)); ?></textarea>
-        <?php }
+        {
+            printf(
+                '<textarea 
+                        name="gp_tarteaucitron_settings[gp_tarteaucitron_css_custom]" 
+                        rows="8" 
+                        style="background: #F2F2F2;
+                            outline: none;
+                            width: 100%%;
+                            border: 1px solid #ccc;
+                            padding: 11px;
+                            line-height: 1.3em;" 
+                        >%s</textarea>',
+                trim(htmlspecialchars($this->css_custom))
+            );
+        }
 
 
         /**
