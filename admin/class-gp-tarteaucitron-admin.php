@@ -7,8 +7,9 @@ if (!defined('ABSPATH')) {
 if (!class_exists('GpTarteaucitronAdmin')) {
     class GpTarteaucitronAdmin
     {
-        protected static $prefix_option = 'gp-tarteaucitron';
-        protected static $prefix_setting = 'gp_tarteaucitron';
+        public static $prefix_option = 'gp-tarteaucitron';
+        public static $prefix_setting = 'gp_tarteaucitron';
+        
         protected $gtm_code;
         protected $init_global;
         protected $init_gtm_service;
