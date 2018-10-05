@@ -39,7 +39,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
             $this->color_secondary = self::getColorSecondary();
             $this->color_text_primary = self::getColorTextPrimary();
             $this->css_custom = self::getCssCustom();
-            var_dump($this->gtm_code);die;
+//            var_dump($this->gtm_code);
         }
 
         public function enqueue_color_picker($hook)
@@ -55,9 +55,15 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
         static function getSettings($key, $else = false)
         {
-            $options = get_option(self::$prefix_setting.'_settings');
-            if (isset($options[$key]) && !empty($options[$key])) {
-                return $options[$key];
+//            $options = get_option(self::$prefix_setting.'_settings');
+//            if (isset($options[$key]) && !empty($options[$key])) {
+//                return $options[$key];
+//            } else {
+//                return $else;
+//            }
+            $options = get_option(self::$prefix_setting . '_settings');
+            if (isset($options[self::$prefix_setting . $key]) && !empty($options[self::$prefix_setting . $key])) {
+                return $options[self::$prefix_setting . $key];
             } else {
                 return $else;
             }
@@ -65,42 +71,42 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
         static function getGtmCode()
         {
-            return self::getSettings('gp_tarteaucitron_gtm_code');
+            return self::getSettings('_gtm_code');
         }
 
         static function getInitGlobal()
         {
-            return self::getSettings('gp_tarteaucitron_init_global', self::init_global_default());
+            return self::getSettings('_init_global', self::init_global_default());
         }
 
         static function getInitGtmService()
         {
-            return self::getSettings('gp_tarteaucitron_init_gtm_service', self::init_gtm_service_default());
+            return self::getSettings('_init_gtm_service', self::init_gtm_service_default());
         }
 
         static function getInitServices()
         {
-            return self::getSettings('gp_tarteaucitron_init_services', self::init_services_default());
+            return self::getSettings('_init_services', self::init_services_default());
         }
 
         static function getColorPrimary()
         {
-            return self::getSettings('gp_tarteaucitron_color_primary', '');
+            return self::getSettings('_color_primary', '');
         }
 
         static function getColorSecondary()
         {
-            return self::getSettings('gp_tarteaucitron_color_secondary', '');
+            return self::getSettings('_color_secondary', '');
         }
 
         static function getColorTextPrimary()
         {
-            return self::getSettings('gp_tarteaucitron_color_text_primary', '#ffffff');
+            return self::getSettings('_color_text_primary', '#ffffff');
         }
 
         static function getCssCustom()
         {
-            return self::getSettings('gp_tarteaucitron_css_custom', self::css_custom_default());
+            return self::getSettings('_css_custom', self::css_custom_default());
         }
 
         /**
@@ -132,7 +138,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
                 <form method="post" action="options.php">
                     <?php
-                    settings_fields('gp_tarteaucitron_option_group');
+                    settings_fields(self::$prefix_setting.'_option_group');
                     do_settings_sections(self::$prefix_option.'-admin-sections');
                     submit_button();
                     ?>
@@ -144,8 +150,8 @@ if (!class_exists('GpTarteaucitronAdmin')) {
         {
             // Register Settings
             register_setting(
-                'gp_tarteaucitron_option_group', // option_group
-                'gp_tarteaucitron_settings', // option_name
+                self::$prefix_setting . '_option_group', // option_group
+                self::$prefix_setting . '_settings', // option_name
                 [$this, 'sanitize_values'] // sanitize_callback
             );
 
@@ -175,7 +181,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Field init global
             add_settings_field(
-                'gp_tarteaucitron_init_global', // id
+                self::$prefix_setting . '_init_global', // id
                 __('Init options'), // title
                 [$this, 'init_global_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
@@ -184,7 +190,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Field GTM code
             add_settings_field(
-                'gp_tarteaucitron_gtm_code', // id
+                self::$prefix_setting . '_gtm_code', // id
                 __('GTM Code'), // title
                 [$this, 'gtm_code_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
@@ -193,7 +199,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Field GTM service
             add_settings_field(
-                'gp_tarteaucitron_init_gtm_service', // id
+                self::$prefix_setting . '_init_gtm_service', // id
                 __('Init GTM services'), // title
                 [$this, 'init_gtm_service_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
@@ -202,7 +208,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Field Init services
             add_settings_field(
-                'gp_tarteaucitron_init_services', // id
+                self::$prefix_setting . '_init_services', // id
                 __('Init Services/options'), // title
                 [$this, 'init_services_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
@@ -211,7 +217,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Field Color primary
             add_settings_field(
-                'gp_tarteaucitron_color_primary', // id
+                self::$prefix_setting . '_color_primary', // id
                 __('Color Primary'), // title
                 [$this, 'color_primary_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
@@ -220,7 +226,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Field Color secondary
             add_settings_field(
-                'gp_tarteaucitron_color_secondary', // id
+                self::$prefix_setting . '_color_secondary', // id
                 __('Color Secondary'), // title
                 [$this, 'color_secondary_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
@@ -229,7 +235,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Field Color text primary
             add_settings_field(
-                'gp_tarteaucitron_color_text_primary', // id
+                self::$prefix_setting . '_color_text_primary', // id
                 __('Color text primary'), // title
                 [$this, 'color_text_primary_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
@@ -238,7 +244,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Field css custom
             add_settings_field(
-                'gp_tarteaucitron_css_custom', // id
+                self::$prefix_setting . '_css_custom', // id
                 __('Custom css rules'), // title
                 [$this, 'css_custom_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
@@ -254,36 +260,36 @@ if (!class_exists('GpTarteaucitronAdmin')) {
         {
             $sanitary_values = [];
 
-            if (isset($input['gp_tarteaucitron_gtm_code'])) {
-                $sanitary_values['gp_tarteaucitron_gtm_code'] = sanitize_text_field($input['gp_tarteaucitron_gtm_code']);
+            if (isset($input[self::$prefix_setting . '_gtm_code'])) {
+                $sanitary_values[self::$prefix_setting . '_gtm_code'] = sanitize_text_field($input[self::$prefix_setting . '_gtm_code']);
             }
 
-            if (isset($input['gp_tarteaucitron_init_global'])) {
-                $sanitary_values['gp_tarteaucitron_init_global'] = $input['gp_tarteaucitron_init_global'];
+            if (isset($input[self::$prefix_setting . '_init_global'])) {
+                $sanitary_values[self::$prefix_setting . '_init_global'] = $input[self::$prefix_setting . '_init_global'];
             }
 
-            if (isset($input['gp_tarteaucitron_init_gtm_service'])) {
-                $sanitary_values['gp_tarteaucitron_init_gtm_service'] = sanitize_textarea_field($input['gp_tarteaucitron_init_gtm_service']);
+            if (isset($input[self::$prefix_setting . '_init_gtm_service'])) {
+                $sanitary_values[self::$prefix_setting . '_init_gtm_service'] = sanitize_textarea_field($input[self::$prefix_setting . '_init_gtm_service']);
             }
 
-            if (isset($input['gp_tarteaucitron_init_services'])) {
-                $sanitary_values['gp_tarteaucitron_init_services'] = sanitize_textarea_field($input['gp_tarteaucitron_init_services']);
+            if (isset($input[self::$prefix_setting . '_init_services'])) {
+                $sanitary_values[self::$prefix_setting . '_init_services'] = sanitize_textarea_field($input[self::$prefix_setting . '_init_services']);
             }
 
-            if (isset($input['gp_tarteaucitron_color_primary'])) {
-                $sanitary_values['gp_tarteaucitron_color_primary'] = sanitize_hex_color($input['gp_tarteaucitron_color_primary']);
+            if (isset($input[self::$prefix_setting . '_color_primary'])) {
+                $sanitary_values[self::$prefix_setting . '_color_primary'] = sanitize_hex_color($input[self::$prefix_setting . '_color_primary']);
             }
 
-            if (isset($input['gp_tarteaucitron_color_secondary'])) {
-                $sanitary_values['gp_tarteaucitron_color_secondary'] = sanitize_hex_color($input['gp_tarteaucitron_color_secondary']);
+            if (isset($input[self::$prefix_setting . '_color_secondary'])) {
+                $sanitary_values[self::$prefix_setting . '_color_secondary'] = sanitize_hex_color($input[self::$prefix_setting . '_color_secondary']);
             }
 
-            if (isset($input['gp_tarteaucitron_color_text_primary'])) {
-                $sanitary_values['gp_tarteaucitron_color_text_primary'] = sanitize_hex_color($input['gp_tarteaucitron_color_text_primary']);
+            if (isset($input[self::$prefix_setting . '_color_text_primary'])) {
+                $sanitary_values[self::$prefix_setting . '_color_text_primary'] = sanitize_hex_color($input[self::$prefix_setting . '_color_text_primary']);
             }
 
-            if (isset($input['gp_tarteaucitron_css_custom'])) {
-                $sanitary_values['gp_tarteaucitron_css_custom'] = sanitize_textarea_field($input['gp_tarteaucitron_css_custom']);
+            if (isset($input[self::$prefix_setting . '_css_custom'])) {
+                $sanitary_values[self::$prefix_setting . '_css_custom'] = sanitize_textarea_field($input[self::$prefix_setting . '_css_custom']);
             }
 
             return $sanitary_values;
@@ -460,9 +466,9 @@ body #tarteaucitronAlertSmall { }';
          */
         public function add_settings_link($links, $file)
         {
-            $this_plugin = plugin_basename('gp-tarteaucitron/gp-tarteaucitron.php');
+            $this_plugin = plugin_basename(self::$prefix_option.'/'.self::$prefix_option.'.php');
             if (is_plugin_active($this_plugin) && $file == $this_plugin) {
-                $links[] = '<a href="' . admin_url('options-general.php?page=gp-tarteaucitron-options') . '">' . __('Settings', 'gp-tarteaucitron') . '</a>';
+                $links[] = '<a href="' . admin_url('options-general.php?page='.self::$prefix_option.'-options') . '">' . __('Settings', self::$prefix_option) . '</a>';
             }
 
             return $links;
