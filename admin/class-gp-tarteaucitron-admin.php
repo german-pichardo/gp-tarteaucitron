@@ -9,7 +9,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
     {
         public static $prefix_option = 'gp-tarteaucitron';
         public static $prefix_setting = 'gp_tarteaucitron';
-        
+
         protected $gtm_code;
         protected $init_global;
         protected $init_gtm_service;
@@ -190,7 +190,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
             // Field GTM code
             add_settings_field(
                 self::$prefix_setting . '_gtm_code', // id
-                __('GTM Code'), // title
+                __('Google Tag Manager ID'), // title
                 [$this, 'gtm_code_render'], // callback
                 self::$prefix_option . '-admin-sections', // page
                 self::$prefix_setting . '_section_services' // section
@@ -199,7 +199,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
             // Field GTM service
             add_settings_field(
                 self::$prefix_setting . '_init_gtm_service', // id
-                __('Init GTM services'), // title
+                __(''), // title
                 [$this, 'init_gtm_service_render'], // callback
                 self::$prefix_option . '-admin-sections', // page
                 self::$prefix_setting . '_section_services' // section
