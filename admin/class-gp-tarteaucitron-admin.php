@@ -7,6 +7,8 @@ if (!defined('ABSPATH')) {
 if (!class_exists('GpTarteaucitronAdmin')) {
     class GpTarteaucitronAdmin
     {
+        protected static $prefix_option = 'gp-tarteaucitron';
+        protected static $prefix_setting = 'gp_tarteaucitron';
         protected $gtm_code;
         protected $init_global;
         protected $init_gtm_service;
@@ -37,12 +39,13 @@ if (!class_exists('GpTarteaucitronAdmin')) {
             $this->color_secondary = self::getColorSecondary();
             $this->color_text_primary = self::getColorTextPrimary();
             $this->css_custom = self::getCssCustom();
+            var_dump($this->gtm_code);die;
         }
 
         public function enqueue_color_picker($hook)
         {
             wp_enqueue_style('wp-color-picker');
-            wp_enqueue_script('gp-tarteaucitron-color-picker', plugins_url('js/color-picker-init.js', __FILE__), ['wp-color-picker'], false, true);
+            wp_enqueue_script(self::$prefix_option.'-color-picker', plugins_url('js/color-picker-init.js', __FILE__), ['wp-color-picker'], false, true);
         }
 
         public static function getPrivacyUrl()
@@ -52,7 +55,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
         static function getSettings($key, $else = false)
         {
-            $options = get_option('gp_tarteaucitron_settings');
+            $options = get_option(self::$prefix_setting.'_settings');
             if (isset($options[$key]) && !empty($options[$key])) {
                 return $options[$key];
             } else {
@@ -110,7 +113,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 __('Tarteaucitron Options'), // page_title
                 __('Gp Tarteaucitron'), // menu_title
                 'manage_options', // capability
-                'gp-tarteaucitron-options', // menu_slug
+                self::$prefix_option.'-options', // menu_slug
                 [$this, 'create_admin_page'] // function
             );
         }
@@ -130,7 +133,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 <form method="post" action="options.php">
                     <?php
                     settings_fields('gp_tarteaucitron_option_group');
-                    do_settings_sections('gp-tarteaucitron-admin-sections');
+                    do_settings_sections(self::$prefix_option.'-admin-sections');
                     submit_button();
                     ?>
                 </form>
@@ -151,14 +154,14 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'section_tarteaucitron_global', // id
                 __('Tarteaucitron global JS options'), // title
                 '', // callback
-                'gp-tarteaucitron-admin-sections' // page
+                self::$prefix_option.'-admin-sections' // page
             );
             // Add Section for option services
             add_settings_section(
                 'section_tarteaucitron_services', // id
                 __('Tarteaucitron Services'), // title
                 '', // callback
-                'gp-tarteaucitron-admin-sections' // page
+                self::$prefix_option.'-admin-sections' // page
             );
 
             // Add Section for option colors
@@ -166,7 +169,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'section_tarteaucitron_colors', // id
                 __('Tarteaucitron Colors'), // title
                 '', // callback
-                'gp-tarteaucitron-admin-sections' // page
+                self::$prefix_option.'-admin-sections' // page
             );
 
 
@@ -175,7 +178,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'gp_tarteaucitron_init_global', // id
                 __('Init options'), // title
                 [$this, 'init_global_render'], // callback
-                'gp-tarteaucitron-admin-sections', // page
+                self::$prefix_option.'-admin-sections', // page
                 'section_tarteaucitron_global' // section
             );
 
@@ -184,7 +187,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'gp_tarteaucitron_gtm_code', // id
                 __('GTM Code'), // title
                 [$this, 'gtm_code_render'], // callback
-                'gp-tarteaucitron-admin-sections', // page
+                self::$prefix_option.'-admin-sections', // page
                 'section_tarteaucitron_services' // section
             );
 
@@ -193,7 +196,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'gp_tarteaucitron_init_gtm_service', // id
                 __('Init GTM services'), // title
                 [$this, 'init_gtm_service_render'], // callback
-                'gp-tarteaucitron-admin-sections', // page
+                self::$prefix_option.'-admin-sections', // page
                 'section_tarteaucitron_services' // section
             );
 
@@ -202,7 +205,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'gp_tarteaucitron_init_services', // id
                 __('Init Services/options'), // title
                 [$this, 'init_services_render'], // callback
-                'gp-tarteaucitron-admin-sections', // page
+                self::$prefix_option.'-admin-sections', // page
                 'section_tarteaucitron_services' // section
             );
 
@@ -211,7 +214,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'gp_tarteaucitron_color_primary', // id
                 __('Color Primary'), // title
                 [$this, 'color_primary_render'], // callback
-                'gp-tarteaucitron-admin-sections', // page
+                self::$prefix_option.'-admin-sections', // page
                 'section_tarteaucitron_colors' // section
             );
 
@@ -220,7 +223,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'gp_tarteaucitron_color_secondary', // id
                 __('Color Secondary'), // title
                 [$this, 'color_secondary_render'], // callback
-                'gp-tarteaucitron-admin-sections', // page
+                self::$prefix_option.'-admin-sections', // page
                 'section_tarteaucitron_colors' // section
             );
 
@@ -229,7 +232,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'gp_tarteaucitron_color_text_primary', // id
                 __('Color text primary'), // title
                 [$this, 'color_text_primary_render'], // callback
-                'gp-tarteaucitron-admin-sections', // page
+                self::$prefix_option.'-admin-sections', // page
                 'section_tarteaucitron_colors' // section
             );
 
@@ -238,7 +241,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 'gp_tarteaucitron_css_custom', // id
                 __('Custom css rules'), // title
                 [$this, 'css_custom_render'], // callback
-                'gp-tarteaucitron-admin-sections', // page
+                self::$prefix_option.'-admin-sections', // page
                 'section_tarteaucitron_colors' // section
             );
 
