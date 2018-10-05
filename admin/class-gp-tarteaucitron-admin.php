@@ -157,14 +157,14 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Add Section for option init js
             add_settings_section(
-                'section_tarteaucitron_global', // id
+                self::$prefix_setting . '_section_global', // id
                 __('Tarteaucitron global JS options'), // title
                 '', // callback
                 self::$prefix_option.'-admin-sections' // page
             );
             // Add Section for option services
             add_settings_section(
-                'section_tarteaucitron_services', // id
+                self::$prefix_setting . '_section_services', // id
                 __('Tarteaucitron Services'), // title
                 '', // callback
                 self::$prefix_option.'-admin-sections' // page
@@ -172,7 +172,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
 
             // Add Section for option colors
             add_settings_section(
-                'section_tarteaucitron_colors', // id
+                self::$prefix_setting . '_section_colors', // id
                 __('Tarteaucitron Colors'), // title
                 '', // callback
                 self::$prefix_option.'-admin-sections' // page
@@ -185,7 +185,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 __('Init options'), // title
                 [$this, 'init_global_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
-                'section_tarteaucitron_global' // section
+                self::$prefix_setting . '_section_global' // section
             );
 
             // Field GTM code
@@ -194,7 +194,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 __('GTM Code'), // title
                 [$this, 'gtm_code_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
-                'section_tarteaucitron_services' // section
+                self::$prefix_setting . '_section_services' // section
             );
 
             // Field GTM service
@@ -203,7 +203,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 __('Init GTM services'), // title
                 [$this, 'init_gtm_service_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
-                'section_tarteaucitron_services' // section
+                self::$prefix_setting . '_section_services' // section
             );
 
             // Field Init services
@@ -212,7 +212,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 __('Init Services/options'), // title
                 [$this, 'init_services_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
-                'section_tarteaucitron_services' // section
+                self::$prefix_setting . '_section_services' // section
             );
 
             // Field Color primary
@@ -221,7 +221,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 __('Color Primary'), // title
                 [$this, 'color_primary_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
-                'section_tarteaucitron_colors' // section
+                self::$prefix_setting . '_section_colors' // section
             );
 
             // Field Color secondary
@@ -230,7 +230,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 __('Color Secondary'), // title
                 [$this, 'color_secondary_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
-                'section_tarteaucitron_colors' // section
+                self::$prefix_setting . '_section_colors' // section
             );
 
             // Field Color text primary
@@ -239,7 +239,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 __('Color text primary'), // title
                 [$this, 'color_text_primary_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
-                'section_tarteaucitron_colors' // section
+                self::$prefix_setting . '_section_colors' // section
             );
 
             // Field css custom
@@ -248,7 +248,7 @@ if (!class_exists('GpTarteaucitronAdmin')) {
                 __('Custom css rules'), // title
                 [$this, 'css_custom_render'], // callback
                 self::$prefix_option.'-admin-sections', // page
-                'section_tarteaucitron_colors' // section
+                self::$prefix_setting . '_section_colors' // section
             );
 
         }
