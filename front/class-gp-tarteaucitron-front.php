@@ -55,7 +55,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function script_init_global()
         {
             if ($this->init_global) { ?>
-                <script id="gp_tarteaucitron_init_global" type="text/javascript">
+                <script id="<?php echo GpTarteaucitronAdmin::$prefix_setting; ?>_init_global" type="text/javascript">
                     <?php echo $this->init_global;?>
                 </script>
             <?php }
@@ -64,7 +64,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function script_init_gtm_service()
         {
             if ($this->init_gtm_service && $this->gtm_code) { ?>
-                <script id="gp_tarteaucitron_init_gtm_service" type="text/javascript">
+                <script id="<?php echo GpTarteaucitronAdmin::$prefix_setting; ?>_init_gtm_service" type="text/javascript">
                     <?php echo $this->init_gtm_service;?>
                 </script>
             <?php }
@@ -73,7 +73,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function script_init_services()
         {
             if ($this->init_services) { ?>
-                <script id="gp_tarteaucitron_init_services" type="text/javascript">
+                <script id="<?php echo GpTarteaucitronAdmin::$prefix_setting; ?>_init_services" type="text/javascript">
                     <?php echo $this->init_services;?>
                 </script>
             <?php }
@@ -82,7 +82,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function css_colors()
         { ?>
             <?php if ($this->init_global && (!empty($this->color_primary) || !empty($this->color_secondary))) : ?>
-            <style id="gp_tarteaucitron_css_colors" type="text/css">
+            <style id="<?php echo GpTarteaucitronAdmin::$prefix_setting; ?>_css_colors" type="text/css">
                 @media screen and (max-width: 767px) {
                     body #tarteaucitronAlertBig #tarteaucitronCloseAlert,
                     body #tarteaucitronAlertBig #tarteaucitronPersonalize {
@@ -105,7 +105,7 @@ if (!class_exists('GpTarteaucitronFront')) {
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronDisclaimerAlert b,
                 body #tarteaucitronRoot #tarteaucitronAlertBig #tarteaucitronPersonalize,
                 body #tarteaucitronAlertBig #tarteaucitronPrivacyUrl {
-                    color: <?php echo $this->color_text_primary;?>;;
+                    color: <?php echo $this->color_text_primary;?>;
                 }
 
                 body #tarteaucitron b,
@@ -207,7 +207,7 @@ if (!class_exists('GpTarteaucitronFront')) {
         public function css_custom()
         { ?>
             <?php if (!empty($this->css_custom)) : ?>
-            <style id="gp_tarteaucitron_css_custom" type="text/css">
+            <style id="<?php echo GpTarteaucitronAdmin::$prefix_setting; ?>_css_custom" type="text/css">
                 <?php echo $this->css_custom;?>
             </style>
         <?php endif; ?>
